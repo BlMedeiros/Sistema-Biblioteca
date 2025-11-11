@@ -18,11 +18,11 @@ public class Emprestimo {
         this.data_devolucao = data_devolucao;
     }
 
-    public Emprestimo(int idLivro, int idUsuario, Date data_emprestimo, Date data_devolucao) {
+    public Emprestimo(int id, int idLivro, int idUsuario, Date data_emprestimo) {
+        this.id = id;
         this.idLivro = idLivro;
         this.idUsuario = idUsuario;
         this.data_emprestimo = data_emprestimo;
-        this.data_devolucao = data_devolucao;
     }
 
     public int getId() {

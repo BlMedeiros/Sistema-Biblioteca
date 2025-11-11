@@ -41,12 +41,12 @@ public class LivroService {
         }
     }
 
-    public void atualizarStatusLivro(int idLivro) {
+    public void atualizarStatusLivro(int idLivro, boolean disponivel) {
         if(idLivro == 0 ) {
             System.err.println("As Informações do Livro Não Podem Ser Nulas!");
         } else {
             try {
-                livroRepository.atualizarStatusLivro(idLivro,false);
+                livroRepository.atualizarStatusLivro(idLivro,disponivel);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

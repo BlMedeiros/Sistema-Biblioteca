@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.model.Emprestimo;
 import org.example.model.Livro;
 import org.example.model.Usuario;
 import org.example.service.EmprestimoService;
@@ -50,6 +51,7 @@ public class BibliotecaView {
                 inserirEmprestimo();
                 break;
             case 5:
+                inserirDevolucao();
                 break;
             case 0:
                 System.out.println("Encerrando o Sistema....");
@@ -101,7 +103,7 @@ public class BibliotecaView {
         List<Usuario> usuarioList = usuarioService.listarUsuario();
 
         usuarioList.forEach(usuario -> {
-            System.out.printf("ID: %-5d | Nome: %-20s | Email: %-20s ",
+            System.out.printf("ID: %-5d | Nome: %-20s | Email: %-20s%n",
                     usuario.getIdUsuario(),
                     usuario.getNome(),
                     usuario.getEmail());
@@ -121,7 +123,35 @@ public class BibliotecaView {
         try {
             emprestimoService.inserirEmprestimo(idLivro, idUsuario);
         } finally {
-            livroService.atualizarStatusLivro(idLivro);
+            livroService.atualizarStatusLivro(idLivro,false);
+        }
+    }
+
+    private void inserirDevolucao() {
+        List<Emprestimo> emprestimoList = emprestimoService.listarEmprestimos();
+
+        emprestimoList.forEach(emprestimo -> {
+            System.out.printf("ID: %-5d | Id Livro: %-5d | Id Usuario: %-5d | Data Empréstimo: %-20s%n",
+                    emprestimo.getId(),
+                    emprestimo.getIdLivro(),
+                    emprestimo.getIdUsuario(),
+                    emprestimo.getData_emprestimo());
+        });
+
+
+        System.out.print("\nInsira o Identificador do Emprestimo: ");
+        int idEmprestimo = sc.nextInt();
+
+        int idLivro = emprestimoList.stream()
+                .filter(emprestimo -> idEmprestimo == emprestimo.getId())
+                .mapToInt(Emprestimo::getIdLivro)
+                .findFirst()
+                .orElse(0);
+
+        try {
+            emprestimoService.atualizarEmprestimo(idEmprestimo);
+        }finally {
+            livroService.atualizarStatusLivro(idLivro,true);
         }
     }
 }

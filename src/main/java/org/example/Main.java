@@ -20,7 +20,7 @@ public class Main {
 
         LivroService livroService = new LivroService(livroRepository);
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
-        EmprestimoService emprestimoService = new EmprestimoService(emprestimoRepository);
+        EmprestimoService emprestimoService = new EmprestimoService(emprestimoRepository,livroRepository);
 
         BibliotecaView bibliotecaView = new BibliotecaView(sc,livroService,usuarioService,emprestimoService);
         while (bibliotecaView.mostrarMenu()) {
